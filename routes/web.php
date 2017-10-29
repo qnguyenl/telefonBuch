@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('suggestor/keyword/{keyword}','SuggestorController@searchKeyword');
+Route::get('suggestor/location/{location}','SuggestorController@searchLocation');
+Route::get('search','SearchController@search');

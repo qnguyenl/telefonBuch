@@ -228,5 +228,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-
+    'apiUrl' => 'https://www.preview.tb.it2media.de',
+    'headers' => [
+        'Accept'=>'text/vnd.de.it2media.tb.ipad.v1+json',
+        'Authorization'=>"Bearer 1468528c-3475-471d-974c-f54629b7cb68"
+    ]
 ];
