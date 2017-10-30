@@ -33,31 +33,22 @@
             <button type="submit" class="btn btn-primary">Finden</button>
         </form>
     </div>
-
-    <div class="row" id="result" class="hitslist" style="text-align: left">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Adress</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if(isset($hits))
-                @foreach($hits as $hit)
-                    <tr>
-                        <td><a href="/details/{{$hit->id}}?st={{$startToken}}">{{$hit->displayName}}</a></td>
-                        <td>{{$hit->address->street.' '.$hit->address->houseNo.', '.$hit->address->postalCode.' '.$hit->address->locationName}}</td>
-                    </tr>
-                    <p></p>
-                @endforeach
-            @endif
-            </tbody>
-        </table>
+    <div class="row" style="text-align: left;">
+        <a type="button" class="btn btn-primary" href="{{$startToken or '/'}}">zurück</a>
     </div>
-    @if(isset($paginator))
-        {{ $paginator->links() }}
-    @endif
+    <div class="row" id="result" class="hitsresult" style="margin-top: 5px; border: 1px solid darkgrey; height: 400px; padding: 20px;">
+        <div class="col-md-4" style="text-align: left;">
+            <div class="row"><h3>{{$displayName or "Notfound"}}</h3></div>
+            <div class="row">Telephone: {{$tel or "Notfound"}}</div>
+            <div class="row">Adresse: {{$address or "Notfound"}}</div>
+        </div>
+        <div class="col-md-4" style="text-align: left;">
+
+        </div>
+        <div class="col-md-4" style="text-align: right;">
+            <img src="{{$logoUri or null}}">
+        </div>
+    </div>
 </div>
 <script>
     window.Laravel = <?php echo json_encode([
