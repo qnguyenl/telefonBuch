@@ -14,11 +14,19 @@ class suggestorController extends Controller
         $client = new Client([
             'base_uri' => config('app.apiUrl'),
         ]);
-
-        $res = $client->get("{$this->apiPath}/keyword/{$keyword}",[
-            'headers' => config('app.headers')
-        ]);
-        echo $res->getBody();
+        try{
+            $res = $client->get("{$this->apiPath}/keyword/{$keyword}",[
+                'headers' => config('app.headers')
+            ]);
+            echo $res->getBody();
+        }catch(GuzzleException $e){
+            $host = $e->getRequest()->getUri();
+            $response = null;
+            if ($e->hasResponse()) {
+                $response = $e->getResponse()->getBody();
+            }
+            return view('error',["host"=>$host,"response"=>$response]);
+        }
     }
 
     public function searchLocation($location)
@@ -26,9 +34,18 @@ class suggestorController extends Controller
         $client = new Client([
             'base_uri' => config('app.apiUrl'),
         ]);
-        $res = $client->get("{$this->apiPath}/location/{$location}",[
-            'headers' => config('app.headers')
-        ]);
-        echo $res->getBody();
+        try{
+            $res = $client->get("{$this->apiPath}/location/{$location}",[
+                'headers' => config('app.headers')
+            ]);
+            echo $res->getBody();
+        }catch(GuzzleException $e){
+            $host = $e->getRequest()->getUri();
+            $response = null;
+            if ($e->hasResponse()) {
+                $response = $e->getResponse()->getBody();
+            }
+            return view('error',["host"=>$host,"response"=>$response]);
+        }
     }
 }

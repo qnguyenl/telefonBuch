@@ -18,4 +18,4 @@ Route::get('/', function () {
 Route::get('suggestor/keyword/{keyword}','SuggestorController@searchKeyword');
 Route::get('suggestor/location/{location}','SuggestorController@searchLocation');
 Route::get('search','SearchController@search');
-Route::get('details','DetailController@show');
+Route::get('details/{id}','DetailController@show');

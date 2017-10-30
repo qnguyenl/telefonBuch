@@ -15,6 +15,12 @@
         <h1>Oops! Something went wrong</h1>
         <a href="/">Back to Homepage</a>
     </div>
+    @if(isset($host))
+    <div class="row alert alert-danger">
+        <p>{{$host or ""}}<p>
+        <p>{{$response or ""}}<p>
+    </div>
+    @endif
 </div>
 <script>
     window.Laravel = <?php echo json_encode([

@@ -16,16 +16,25 @@ class SearchController extends Controller
         ]);
         $keyword = $request->input('keyword');
         $location = $request->input('location');
-        $client = new Client([
-            'base_uri' => config('app.apiUrl'),
-        ]);
-        $res = $client->get("{$this->apiPath}/{$keyword}/{$location}/{$request->input('page')}",[
-            'headers' => config('app.headers')
-        ]);
-        $hitlist = json_decode($res->getBody())->hitlist;
-        $hits = $hitlist->hits;
-        $paginator = new LengthAwarePaginator([],$hitlist->totalHitCount,20);
-        $paginator->setPath("/search?keyword={$keyword}&location={$location}");
-        return view('welcome',['hits'=>$hits,'paginator'=>$paginator,'keyword'=>$keyword,'location'=>$location,'startToken'=>$request->fullUrl()]);
+        try{
+            $client = new Client([
+                'base_uri' => config('app.apiUrl'),
+            ]);
+            $res = $client->get("{$this->apiPath}/{$keyword}/{$location}/{$request->input('page')}",[
+                'headers' => config('app.headers')
+            ]);
+            $hitlist = json_decode($res->getBody())->hitlist;
+            $hits = $hitlist->hits;
+            $paginator = new LengthAwarePaginator([],$hitlist->totalHitCount,20);
+            $paginator->setPath("/search?keyword={$keyword}&location={$location}");
+            return view('welcome',['hits'=>$hits,'paginator'=>$paginator,'keyword'=>$keyword,'location'=>$location,'startToken'=>urlencode($request->fullUrl())]);
+        }catch(GuzzleException $e){
+            $host = $e->getRequest()->getUri();
+            $response = null;
+            if ($e->hasResponse()) {
+                $response = $e->getResponse()->getBody();
+            }
+            return view('error',["host"=>$host,"response"=>$response]);
+        }
     }
 }
