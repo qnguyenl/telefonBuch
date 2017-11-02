@@ -46,7 +46,7 @@
             @if(isset($hits))
                 @foreach($hits as $hit)
                     <tr>
-                        <td><a href="/details/{{$hit->id}}?st={{$startToken}}">{{$hit->displayName}}</a></td>
+                        <td><a href="/details/{{pathinfo($hit->url)['filename']}}?st={{$startToken}}">{{$hit->displayName}}</a></td>
                         <td>{{$hit->address->street.' '.$hit->address->houseNo.', '.$hit->address->postalCode.' '.$hit->address->locationName}}</td>
                     </tr>
                     <p></p>
